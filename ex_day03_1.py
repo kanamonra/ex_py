@@ -1,13 +1,15 @@
-# 6.2
-guess_me = 7
+# 6.3
+guess_me = 5
 number = 1
 while number < guess_me:
+    for number in range(0, 10):
+        if number == guess_me:
+            print('Found it!')
+        print('too low')
     number = number + 1
     if number == guess_me:
         print('Found it!')
-        break
-    if number > guess_me:
-        print('too_low')
 
-    else:
+    if number > guess_me:
         print('oops')
+        break
