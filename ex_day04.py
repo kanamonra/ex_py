@@ -1,6 +1,9 @@
-# 7.1
-year_lists = [2001, 2002, 2003, 2004, 2005, 2006]
-# 7.2
-print(year_lists[2])
-# 7.3
-print(year_lists[-1])
+# 7.8 리스트 만들기
+secret = ['Groucho', 'Chico', 'Harpo']
+# 7.9 Harpo의 첫글자만 소문자로 변경
+secret[-1] = secret[-1].lower()
+print(secret)
+# 7.9 순서를 바뀌기
+secret.reverse()
+secret[-3] = secret[-3].title()
+print(secret)
