@@ -1,11 +1,13 @@
 # Alcohol recommendation program
 import random
 
-alcohol_drinks = {
-    'Beer': 'Chicken',
-    'Soju': 'Somyeong',
-    'Wine': 'Cheese',
-}
+# alcohol_drinks = {
+#     'Beer': 'Chicken',
+#     'Soju': 'Somyeong',
+#     'Wine': 'Cheese',
+
+# dictionary
+alcohol_drinks = dict(beer = 'chicken', soju = 'somiyeong', wine = 'cheese')
 alcohol_list = list(alcohol_drinks)  # extract keys
 food_list =[food for food in alcohol_drinks.values()]  # extract values and append list
 
