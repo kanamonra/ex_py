@@ -22,4 +22,3 @@ print(second)
 # compare dictionary
 print(first == second)
 print(second == second_copy)
-
