@@ -1,20 +1,16 @@
-# 9.3
-def test(func):
-    """
-    Program that calculate 2 index's sum'
-    :param func: decorate function
-    :return: result
-    """
-    def new_func(*args, **kwargs):
-        result = func(*args, **kwargs)
-        print('Start: ', func.__name__)
-        print('Result: ', result)
-        print('End. Thank you for using', func.__name__)
-        return  result
-    return new_func
+# 9.4 OopsException 만들기
 
-@test
-def suma(x, y):
-    return x + y
+class OopsException(Exception):
+    pass
 
-suma(3, 23)
+try:
+    raise OopsException("Caught an oops (; ꒪ö꒪) ")
+except OopsException as ehe:
+    print(ehe)
+
+shorty = ['Hello', 'I', 'am', 'a', 'robot']
+for word in shorty:
+    if word.istitle():
+        print(f"This word is already got title on it. {OopsException(word)}")
+
+
