@@ -1,16 +1,19 @@
-# 9.4 OopsException 만들기
-
-class OopsException(Exception):
+# 10.1 print result
+class thing():
     pass
 
-try:
-    raise OopsException("Caught an oops (; ꒪ö꒪) ")
-except OopsException as ehe:
-    print(ehe)
+example = thing()
+print(thing)   # result: <class '__main__.thing'>
+print(example)  # <__main__.thing object at 0x0000023C02B0FBD0>
 
-shorty = ['Hello', 'I', 'am', 'a', 'robot']
-for word in shorty:
-    if word.istitle():
-        print(f"This word is already got title on it. {OopsException(word)}")
+# 10.2 print 'abc'
+class thing2:
+    letters = 'abc'
 
+print(thing2.letters)
+
+# 10.3 'xyz' but give init
+class thing3:
+    def __init__(self):
+        self.letters = 'xyz'
 
