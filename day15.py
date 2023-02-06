@@ -1,7 +1,7 @@
 # 이중 연결 리스트 구현하기
-# 228p - 6장 응용예제 01
-# 난이도 1점
-import random
+# 230p 6장 응용예제 02
+# 난이도 3점
+# used separate characters one by one
 
 
 def isStackFull():
@@ -45,24 +45,37 @@ def peek():
     return stack[top]
 
 
-SIZE = 7
+SIZE = 100
 stack = [None for _ in range(SIZE)]
 top = -1
 
 if __name__ == "__main__":
-    stone_array = ['red', 'blue', 'green', 'yellow', 'purple', 'orange']
-    random.shuffle(stone_array)
 
-    print("Way to candy house: ", end=" ")
-    for stone in stone_array:
-        push(stone)
-        print(stone, "-->", end=" ")
-    print("Our home")
+    exam_array = ['진달래꽃', '나 보기가 역겨워', '가실 때에는', '말없이 고이 보내드리오리다']
+    # letter = [x for x in exam_array]
 
-    print("Way to home: ", end=" ")
+    print("------- 원본 -------")
+    for letter in exam_array:
+        push(letter)
+        print(letter, "\n", end="")
+    print()
+
+    print("------- 거꾸로 처리된 결과 -------")
     while True:
-        stone = pop()
-        if stone == None:
+        letter = pop()
+        if letter == None:
             break
-        print(stone, "-->", end= " ")
-    print("Candy house")
+        miniStack = [None for _ in range(len(letter))]
+        miniTop = -1
+        for ch in letter:
+            miniTop += 1
+            miniStack[miniTop] = ch
+
+        while True:
+            if miniTop == -1:
+                break
+
+            ch = miniStack[miniTop]
+            miniTop -= 1
+            print(ch, end="")
+
