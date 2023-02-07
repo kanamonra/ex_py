@@ -1,81 +1,75 @@
-# 이중 연결 리스트 구현하기
-# 230p 6장 응용예제 02
-# 난이도 3점
-# used separate characters one by one
+# 큐 7장
+# 269p 응용예제 01
+# 난이도 2점
 
 
-def isStackFull():
-    global stack, SIZE, top
-    if top >= SIZE - 1:
+def isQueueFull():
+    global SIZE, front, rear
+    if rear == SIZE-1:
         return True
     else:
         return False
 
 
-def isStackEmpty():
-    global stack, top
-    if top == -1:
+def isQueueEmpty():
+    global SIZE, front, rear
+    if front == rear:
         return True
     else:
         return False
 
 
-def push(data):
-    global stack, top
-    if isStackFull():
+def en_queue(data):
+    global SIZE, queue, front, rear
+    if isQueueFull():
         print('Stack is full')
-    top += 1
-    stack[top] = data
+        return
+    rear += 1
+    queue[rear] = data
 
 
-def pop():
-    global stack, top, SIZE
-    if isStackEmpty():
+def de_queue():
+    global SIZE, queue, front, rear
+    if isQueueEmpty():
+        print('Queue is empty')
         return None
-    data = stack[top]
-    stack[top] = None
-    top -= 1
+    front += 1
+    data = queue[front]
+    queue[front] = None
+
+    for x in range(front+1, rear+1):
+        queue[x-1] = queue[x]
+        queue[x] = None
+    front = -1
+    rear -= 1
+
     return data
 
 
 def peek():
-    global stack, SIZE, top
-    if isStackEmpty():
+    global SIZE, queue, front, rear
+    if isQueueEmpty():
+        print('Queue is empty')
         return None
-    return stack[top]
+    return queue[front+1]
 
 
-SIZE = 100
-stack = [None for _ in range(SIZE)]
-top = -1
+SIZE = 5
+queue = [None for _ in range(SIZE)]
+front = rear = -1
 
 if __name__ == "__main__":
 
-    exam_array = ['진달래꽃', '나 보기가 역겨워', '가실 때에는', '말없이 고이 보내드리오리다']
-    # letter = [x for x in exam_array]
+    en_queue('Fill')
+    en_queue('Mike')
+    en_queue('Charlie')
+    en_queue('Charly')
+    en_queue('Ethan')
 
-    print("------- 원본 -------")
-    for letter in exam_array:
-        push(letter)
-        print(letter, "\n", end="")
-    print()
+    print('Current waiting line: ', queue)
 
-    print("------- 거꾸로 처리된 결과 -------")
-    while True:
-        letter = pop()
-        if letter == None:
-            break
-        miniStack = [None for _ in range(len(letter))]
-        miniTop = -1
-        for ch in letter:
-            miniTop += 1
-            miniStack[miniTop] = ch
+    for _ in range(rear+1):
+        print(de_queue(), 'has entered the restaurant')
+        print('Current waiting line: ', queue)
 
-        while True:
-            if miniTop == -1:
-                break
-
-            ch = miniStack[miniTop]
-            miniTop -= 1
-            print(ch, end="")
-
+    print('Restaurant is closed')
