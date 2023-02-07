@@ -1,74 +1,62 @@
-# 큐 7장
-# 272p 응용예제 02
-# 난이도 3점
+# 큐 8장
+# 309p 응용예제 01
+# 난이도 2점
+# count how many product has overlap
+import random
 
 
-def isQueueFull():
-    global SIZE, front, rear
-    if (rear + 1) % SIZE == front:
-        return True
-    else:
-        return False
+class tree_node():
+    def __init__(self):
+        self.data = None
+        self.left = None
+        self.right = None
 
 
-def isQueueEmpty():
-    global SIZE, front, rear
-    if front == rear:
-        return True
-    else:
-        return False
+memory = []
+
+item_array = ['Banana milk', 'Coffee', 'Chupa chups', 'Fast food', 'Water', 'Cola', 'Onigiri']
+selled_array = [random.choice(item_array) for _ in range(10)]
+
+print("Today's sells(overlap)", selled_array)
+
+node = tree_node()
+node.data = selled_array[0]
+root = node
+memory.append(node)
+
+for name in selled_array[1:]:
+    node = tree_node()
+    node.data = name
+    current = root
+    while True:
+        if name == current.data:
+            pro_count = selled_array.count(name)
+            break
+        elif name < current.data:
+            if current.left == None:
+                current.left = node
+                memory.append(node)
+                break
+            current = current.left
+        else:
+            if current.right == None:
+                current.right = node
+                memory.append(node)
+                break
+            current = current.right
 
 
-def en_queue(data):
-    global SIZE, queue, front, rear
-    if isQueueFull():
-        print('Stack is full')
+print('Binary tree data management has done!')
+print("The most repeated product number: ", pro_count)
+
+def preorder(node):
+    if node == None:
         return
-    rear = (rear + 1) % SIZE
-    queue[rear] = data
+    print(node.data, end=' ')
+    preorder(node.left)
+    preorder(node.right)
 
 
-def de_queue():
-    global SIZE, queue, front, rear
-    if isQueueEmpty():
-        print('Queue is empty')
-        return None
-    front = (front + 1) % SIZE
-    data = queue[front]
-    queue[front] = None
-    return data
+print("Today's sells(non-overlap)", end=' ')
 
-
-def peek():
-    global SIZE, queue, front, rear
-    if isQueueEmpty():
-        print('Queue is empty')
-        return None
-    return queue[(front + 1) % SIZE]
-
-
-def cal_time():
-    global SIZE, queue, front, rear
-    time_sum = 0
-    for i in range((front + 1) % SIZE, (rear + 1) % SIZE):
-        time_sum += queue[i][1]
-        return time_sum
-
-
-SIZE = 6
-queue = [None for _ in range(SIZE)]
-front = rear = 0
-
-if __name__ == "__main__":
-
-    waiting_time = [('Usage', 9), ('Break down', 3), ('Return', 4), ('Return', 4), ('Break down', 3)]
-
-    for time in waiting_time:
-        print('Apparently your waiting time is ', cal_time())
-
-        print('Current waiting line: ', queue)
-        en_queue(time)
-        print()
-
-    print('Updated waiting line: ', queue)
-    print('Program ends...')
+preorder(root)
