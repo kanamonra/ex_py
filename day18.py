@@ -1,5 +1,6 @@
-# 9장 응용예제 1
-# 편의점 찾기
+# 9장 응용예제 2
+# 가장 효율적인 해저 케이블망 구성하기
+
 class graph:
     def __init__(self, size):
         self.SIZE = size
@@ -10,66 +11,113 @@ def print_graph(g):
     global store_array
     print(' ', end='')
     for v in range(g.SIZE):
-        print(store_array[v][0], end=' ')
+        print(store_array[v], end=' ')
     print()
     for row in range(g.SIZE):
-        print(store_array[row][0], end=' ')
+        print(store_array[row], end=' ')
         for col in range(g.SIZE):
             print(g.graph[row][col], end='  ')
         print()
     print()
 
 
+def findVertex(g, findVtx):
+    stack = []
+    visitedAry = []  # 방문한 노드
+
+    current = 0  # 시작 정점
+    stack.append(current)
+    visitedAry.append(current)
+
+    while len(stack) != 0:
+        next = None
+        for vertex in range(gSIZE):
+            if g.graph[current][vertex] != 0:
+                if vertex in visitedAry:
+                    pass
+                else:
+                    next = vertex
+                    break
+
+        if next != None:
+            current = next
+            stack.append(current)
+            visitedAry.append(current)
+
+        else:
+            current = stack.pop()
+
+    if findVtx in visitedAry:
+        return True
+    else:
+        return False
+
+
 g1 = None
-store_array = [['GS25    ', 30], ['CU      ', 60], ['Seven7  ', 10], ['emart24 ', 40], ['ministop', 90]]
-GS25, CU, Seven7, Emart24, ministop = 0, 1, 2, 3, 4
+store_array = ['Seoul', 'New York', 'Beijing', 'Bangkok', 'London', 'Paris']
+seoul, newyork, beijing, bangkok, london, paris = 0, 1, 2, 3, 4, 5
 
-
-gSIZE = 5
+gSIZE = 6
 g1 = graph(gSIZE)
-g1.graph[0][1] = 1
-g1.graph[0][2] = 1
-g1.graph[1][0] = 1
-g1.graph[1][2] = 1
-g1.graph[1][4] = 1
-g1.graph[2][1] = 1
-g1.graph[2][0] = 1
-g1.graph[2][4] = 1
-g1.graph[3][4] = 1
-g1.graph[4][1] = 1
-g1.graph[4][2] = 1
-g1.graph[4][3] = 1
+g1.graph[seoul][newyork] = 80
+g1.graph[seoul][beijing] = 10
+g1.graph[newyork][seoul] = 80
+g1.graph[newyork][beijing] = 40
+g1.graph[newyork][bangkok] = 70
+g1.graph[beijing][seoul] = 10
+g1.graph[beijing][newyork] = 40
+g1.graph[beijing][bangkok] = 50
+g1.graph[bangkok][newyork] = 70
+g1.graph[bangkok][beijing] = 50
+g1.graph[bangkok][london] = 30
+g1.graph[bangkok][paris] = 20
+g1.graph[london][bangkok] = 30
+g1.graph[london][paris] = 60
+g1.graph[paris][bangkok] = 20
+g1.graph[paris][london] = 60
 
 stack = []
 visited_array = []
 
-print('Convenience store graph ฅ^•ﻌ•^ฅ')
+print('BEFORE  ฅ^•ﻌ•^ฅ')
 print_graph(g1)
+
 current = 0
-most_have = current
-max_count = store_array[current][1]
+edge_array = []
+for i in range(gSIZE):
+    for k in range(gSIZE):
+        if g1.graph[i][k] != 0:
+            edge_array.append([g1.graph[i][k], i, k])
+
 stack.append(current)
 visited_array.append(current)
 
-while (len(stack) != 0):
-    next = None
-    for vertex in range(4):
-        if g1.graph[current][vertex] == 1:
-            if vertex in visited_array:
-                pass
-            else:
-                next = vertex
-                break
+from operator import itemgetter
 
-    if next != None:
-        current = next
-        stack.append(current)
-        visited_array.append(current)
-    if store_array[current][1] > max_count:
-        max_count = store_array[current][1]
-        most_have = current
+egde_array = sorted(edge_array, key=itemgetter(0), reverse=True)
+new_array = []
+for i in range(0, len(egde_array), 2):
+    new_array.append(egde_array[i])
+
+index = 0
+
+while len(new_array) > gSIZE -1:
+    start = new_array[index][1]
+    end = new_array[index][2]
+    save_way = new_array[index][0]
+
+    startYN = findVertex(g1, start)
+    endYN = findVertex(g1, start)
+
+
+
+    if startYN and endYN:
+        del(new_array[index])
     else:
-        current = stack.pop()
+        g1.graph[start][end] = save_way
+        g1.graph[end][start] = save_way
+        index += 1
 
-print('Most honeychip count is -->', 'with', store_array[current][1], 'piece and\nthe STORE IS ଘ(੭˃ᴗ˂)੭ --->', store_array[current][0], end='')
+print('AFTER ฅ^•ﻌ•^ฅ')
+print_graph(g1)
 
