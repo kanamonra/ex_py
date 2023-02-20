@@ -6,7 +6,7 @@ print("서버에 연결됨")
 
 while True:
     message = input("전송 메세지 입력 :")
-    if message == "exit" or "quit":
+    if message == "exit" or message == "quit":
         break
     client_socket.sendall((message + "\n").encode())  # encode
     data = client_socket.recv(1024).decode()   # decode
